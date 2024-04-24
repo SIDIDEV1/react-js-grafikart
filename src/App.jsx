@@ -1,23 +1,22 @@
 import {useState} from "react";
 
 function App() {
-
-    const [person, setPerson] = useState({
-        firstname: 'sidi',
-        lastname: 'sidi',
-        age : 18
-    })
-
-    const increment = () => {
-        setPerson({...person, age: person.age+1})
-    }
-
-  return <>
+    const [isCgu, setIsCgu] = useState(false)
+    return <>
       <div>
-          <p>La personne : {person.firstname} à {person.age} ans.</p>
-          <button onClick={increment}>{`Agmenter l'age`}</button>
+          <Cgu checked={isCgu} onCheck={setIsCgu}/>
+          <button disabled={!isCgu}>{`Valider`}</button>
       </div>
       </>
+}
+
+
+function Cgu({checked, onCheck}) {
+    return <div>
+        <label>valider la cgu
+            <input type={"checkbox"} checked={checked} onChange={(e) => onCheck(e.target.checked)} />
+        </label>
+    </div>
 }
 
 export default App
