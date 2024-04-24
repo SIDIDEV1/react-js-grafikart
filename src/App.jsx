@@ -9,7 +9,7 @@ function App() {
     })
 
     const increment = () => {
-        setPerson({...person, age: person.age++})
+        setPerson({...person, age: person.age+1})
     }
 
   return <>
