@@ -4,7 +4,11 @@ import {useIncrement} from "./components/hooks/useIncrement.js";
 
 function App() {
     const [checked, toggleCheck] = useToggle()
-    const {count, increase, decrease} = useIncrement(10)
+    const {count, increase, decrease} = useIncrement({
+        base: 0,
+        min: 5,
+        max: 10
+    })
 
     return <div className="p-4 max-w-2xl mx-auto">
         <input type="checkbox" checked={checked} onChange={toggleCheck}/>
