@@ -1,83 +1,46 @@
 import {Input} from "./components/forms/Input.jsx";
-import {Checkbox} from "./components/forms/Checkbox.jsx";
-import {ProductRow} from "./components/products/ProductRow.jsx";
-import {ProductCategoryRow} from "./components/products/ProductCategoryRow.jsx";
-import {useState} from "react";
-
-const PRODUCTS = [
-    {category: "Fruits", price: "$1", stocked: true, name: "Apple"},
-    {category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit"},
-    {category: "Fruits", price: "$2", stocked: false, name: "Passionfruit"},
-    {category: "Vegetables", price: "$2", stocked: true, name: "Spinach"},
-    {category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin"},
-    {category: "Vegetables", price: "$1", stocked: true, name: "Peas"}
-]
+import {useEffect, useState} from "react";
 
 function App() {
-    const [showProductInStock, setShowProductInStock] = useState(false)
-    const [search, setSearch] = useState('')
 
-    const filteredProduct = PRODUCTS.filter(product => {
-        if (showProductInStock && !product.stocked) {
-            return false
-        }
-        return !(search && !product.name.includes(search));
-
-    })
-
-    return <div className="max-w-2xl mx-auto p-4">
-        <SearchBar
-            search={search}
-            onSearchChange={setSearch}
-            showProductInStock={showProductInStock}
-            onStockedChange={setShowProductInStock}
-        />
-        <ProductTable products={filteredProduct}/>
-    </div>
-}
+    const [count, setCount] = useState(5)
+    const [timeLeft, setTimeLeft] = useState(count)
 
 
-function SearchBar({showProductInStock, onStockedChange, search, onSearchChange}) {
-    return <div>
-        <div className="flex flex-col gap-2 mb-4">
-            <Input placeholder="Rechercher..." value={search} onChange={onSearchChange}/>
-            <Checkbox id="checkbox"
-                      label={`N'afficher que les produits en stock`}
-                      checked={showProductInStock}
-                      onChange={onStockedChange}/>
-        </div>
-    </div>
-}
-
-
-function ProductTable({products}) {
-    const rows = []
-    let lastCategory = null
-    for (let product of products) {
-        if (product.category !== lastCategory) {
-            rows.push(<ProductCategoryRow key={product.category} name={product.category}/>)
-        }
-        lastCategory = product.category
-        rows.push(<ProductRow key={product.name} product={product}/>)
+    const handleChange = (v) => {
+        setCount(v)
+        setTimeLeft(v)
     }
 
-    return <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" className="px-6 py-3">
-                    Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                    Prix
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {rows}
-            </tbody>
-        </table>
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft(v => {
+                if (v <= 1) {
+                    clearInterval(timer)
+                    return 0
+                }
+                return v - 1
+            })
+        }, 1000)
+
+        return () => {
+            clearInterval(timer)
+        }
+    }, [count]);
+
+    return <div className="p-4 max-2xl mx-auto">
+        <Input
+            type="number"
+            placeholder='Tapez une valeur'
+            value={count}
+            onChange={handleChange}
+        />
+
+        <p className="mt-10 text-2xl">
+            Décompte : {timeLeft}
+        </p>
     </div>
+
 }
 
 export default App
