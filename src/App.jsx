@@ -2,6 +2,7 @@ import {Input} from "./components/forms/Input.jsx";
 import {Checkbox} from "./components/forms/Checkbox.jsx";
 import {ProductRow} from "./components/products/ProductRow.jsx";
 import {ProductCategoryRow} from "./components/products/ProductCategoryRow.jsx";
+import {useState} from "react";
 
 const PRODUCTS = [
     {category: "Fruits", price: "$1", stocked: true, name: "Apple"},
@@ -13,19 +14,37 @@ const PRODUCTS = [
 ]
 
 function App() {
+    const [showProductInStock, setShowProductInStock] = useState(false)
+    const [search, setSearch] = useState('')
+
+    const filteredProduct = PRODUCTS.filter(product => {
+        if (showProductInStock && !product.stocked) {
+            return false
+        }
+        return !(search && !product.name.includes(search));
+
+    })
+
     return <div className="max-w-2xl mx-auto p-4">
-        <SearchBar/>
-        <ProductTable products={PRODUCTS}/>
+        <SearchBar
+            search={search}
+            onSearchChange={setSearch}
+            showProductInStock={showProductInStock}
+            onStockedChange={setShowProductInStock}
+        />
+        <ProductTable products={filteredProduct}/>
     </div>
 }
 
 
-function SearchBar() {
+function SearchBar({showProductInStock, onStockedChange, search, onSearchChange}) {
     return <div>
         <div className="flex flex-col gap-2 mb-4">
-            <Input placeholder="Rechercher..." value="null" onChange={() => null}/>
-            <Checkbox id="checkbox" label={`N'afficher que les produits en stock`} checked={false}
-                      onChange={() => null}/>
+            <Input placeholder="Rechercher..." value={search} onChange={onSearchChange}/>
+            <Checkbox id="checkbox"
+                      label={`N'afficher que les produits en stock`}
+                      checked={showProductInStock}
+                      onChange={onStockedChange}/>
         </div>
     </div>
 }
