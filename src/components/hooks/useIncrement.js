@@ -7,9 +7,9 @@ import {useState} from "react";
 export function useIncrement(initial = 0) {
     const [state, setState] = useState(initial);
 
-    return [
-        state,
-        () => setState(v => v + 1),
-        () => setState(v => v - 1)
-    ]
+    return {
+        count: state,
+        increase: () => setState(v => v + 1),
+        decrease: () => setState(v => v - 1)
+    }
 }
