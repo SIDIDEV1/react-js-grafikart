@@ -7,6 +7,15 @@ function reducer(state, action) {
             todos: state.todos.filter(v => v !== action.payload)
         }
     }
+    if (action.type === 'TOGGLE_TODO') {
+        return {
+            ...state,
+            todos: state.todos.map(todo => todo === action.payload ? {
+                ...todo,
+                checked: !todo.checked
+            } : todo)
+        }
+    }
     return state
 }
 
@@ -22,7 +31,18 @@ function App() {
     return <div className="max-w-xl mx-auto text-center">
         <ul>
             {states.todos.map(todo => (
-                <li onClick={() => dispatch({type: 'REMOVE_TODO', payload: todo})} key={todo.name}> {todo.name}</li>))}
+                <li key={todo.name}>
+                    <input type={"checkbox"} checked={todo.checked}
+                           onChange={() => dispatch({type: 'TOGGLE_TODO', payload: todo})}/>
+                    {todo.name}
+                    <button
+                        onClick={() => dispatch({type: 'REMOVE_TODO', payload: todo})}
+                        className="bg-red-600 text-white p-2 rounded"
+                    >
+                        Supprimer
+                    </button>
+                </li>
+            ))}
         </ul>
     </div>
 }
