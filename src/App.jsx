@@ -1,5 +1,8 @@
 import {useToggle} from "./components/hooks/useToggle.js";
 import {useIncrement} from "./components/hooks/useIncrement.js";
+import {useDocumentTitle} from "./components/hooks/useDocumentTitle.js";
+import {useState} from "react";
+import {Input} from "./components/forms/Input.jsx";
 
 
 function App() {
@@ -10,11 +13,14 @@ function App() {
         max: 10
     })
 
+    const [state, setState] = useState('');
+    useDocumentTitle(state ? `Whooooww ${state}` : null)
+
     return <div className="p-4 max-w-2xl mx-auto">
         <input type="checkbox" checked={checked} onChange={toggleCheck}/>
         {checked && 'Je suis coché'}
 
-
+        <Input type="text" placeholder="tapez votre nom ici" value={state} onChange={setState}/>
         <div>
             count : {count}
             <div>
