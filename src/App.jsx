@@ -16,6 +16,13 @@ function reducer(state, action) {
             } : todo)
         }
     }
+
+    if (action.type === 'CLEAR_COMPLETED') {
+        return {
+            ...state,
+            todos: state.todos.filter(todo => !todo.checked)
+        }
+    }
     return state
 }
 
@@ -44,6 +51,13 @@ function App() {
                 </li>
             ))}
         </ul>
+
+        <button
+            onClick={() => dispatch({type: 'CLEAR_COMPLETED'})}
+            className="bg-red-400 text-white p-1 mt-5 rounded"
+        >
+            Supprimer les tâches complètes
+        </button>
     </div>
 }
 
