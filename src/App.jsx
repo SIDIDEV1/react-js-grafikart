@@ -1,4 +1,7 @@
 import {createPortal} from "react-dom";
+import {ProductCategoryRow} from "./components/products/ProductCategoryRow.jsx";
+import {ProductRow} from "./components/products/ProductRow.jsx";
+import {ErrorBoundary} from "./components/ErrorBoundary.jsx";
 
 function App() {
     return <div className=" relative bg-blue-100 m-10 h-[300px] overflow-hidden overflow-y-auto">
@@ -32,6 +35,10 @@ function App() {
             assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait
             que survivre cinq
         </p>
+
+        <ErrorBoundary fallback={<p className="text-2xl text-red-100">Woooooooo</p>}>
+            <ProductRow/>
+        </ErrorBoundary>
 
         <Modal/>
     </div>
