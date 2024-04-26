@@ -1,67 +1,30 @@
-import {createPortal} from "react-dom";
-import {ProductRow} from "./components/products/ProductRow.jsx";
-import {ErrorBoundary} from "react-error-boundary";
+import {useReducer} from "react";
+
+function reducer(state, action) {
+    if (action.type === 'REMOVE_TODO') {
+        return {
+            ...state,
+            todos: state.todos.filter(v => v !== action.payload)
+        }
+    }
+    return state
+}
 
 function App() {
-    return <div className=" relative bg-blue-100 m-10 h-[300px] overflow-hidden overflow-y-auto">
-        <p>
-            Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.
-            Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme
-            assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait
-            que survivre cinq
-        </p>
-        <p>
-            Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.
-            Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme
-            assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait
-            que survivre cinq
-        </p>
-        <p>
-            Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.
-            Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme
-            assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait
-            que survivre cinq
-        </p>
-        <p>
-            Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.
-            Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme
-            assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait
-            que survivre cinq
-        </p>
-        <p>
-            Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.
-            Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme
-            assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait
-            que survivre cinq
-        </p>
+    const [states, dispatch] = useReducer(reducer, {
+        todos: [
+            {name: "One", checked: false},
+            {name: "Two", checked: true},
+            {name: "Three", checked: false},
+        ]
+    })
 
-        <ErrorBoundary
-            FallbackComponent={AlertError}
-            onReset={() => console.log('Zbiii')}
-        >
-            <ProductRow/>
-        </ErrorBoundary>
-
-        <Modal/>
+    return <div className="max-w-xl mx-auto text-center">
+        <ul>
+            {states.todos.map(todo => (
+                <li onClick={() => dispatch({type: 'REMOVE_TODO', payload: todo})} key={todo.name}> {todo.name}</li>))}
+        </ul>
     </div>
-}
-
-function AlertError({error, resetErrorBoundary}) {
-    return <div className="bg-red-700 text-white">
-        <p>Something went wrong:</p>
-        <pre style={{color: "red"}}>{error.toString()}</pre>
-
-        <button onClick={resetErrorBoundary}>resetError</button>
-    </div>
-}
-
-
-function Modal() {
-    return createPortal(
-        <div className="absolute bg-white top-0 right-0 p-4 border border-2">
-            <h2>Mon modal</h2>
-        </div>, document.body
-    )
 }
 
 export default App
