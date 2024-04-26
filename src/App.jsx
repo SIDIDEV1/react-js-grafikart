@@ -1,35 +1,22 @@
-import {useToggle} from "./components/hooks/useToggle.js";
-import {useIncrement} from "./components/hooks/useIncrement.js";
-import {useDocumentTitle} from "./components/hooks/useDocumentTitle.js";
-import {useState} from "react";
-import {Input} from "./components/forms/Input.jsx";
-
+import {useFetch} from "./components/hooks/useFetch.js";
 
 function App() {
-    const [checked, toggleCheck] = useToggle()
-    const {count, increase, decrease} = useIncrement({
-        base: 0,
-        min: 5,
-        max: 10
-    })
+    // https://jsonplaceholder.typicode.com/posts?_limit=8&_delay=3000
 
-    const [state, setState] = useState('');
-    useDocumentTitle(state ? `Whooooww ${state}` : null)
+    const {
+        loading,
+        data,
+        errors
+    } = useFetch('https://jsonplaceholder.typicode.com/posts?_limit=8&_delay=3000')
 
     return <div className="p-4 max-w-2xl mx-auto">
-        <input type="checkbox" checked={checked} onChange={toggleCheck}/>
-        {checked && 'Je suis coché'}
-
-        <Input type="text" placeholder="tapez votre nom ici" value={state} onChange={setState}/>
-        <div>
-            count : {count}
+        {loading && <div>Loading...</div>}
+        {data &&
             <div>
-                <button className="bg-blue-200 p-2 rounded" onClick={increase}>increase</button>
+                {JSON.stringify(data)}
             </div>
-            <div>
-                <button className="bg-red-200 p-2 rounded" onClick={decrease}>decrease</button>
-            </div>
-        </div>
+        }
+        {errors && <div className="text-2xl text-red-400">{errors.toString()}</div>}
     </div>
 
 }
