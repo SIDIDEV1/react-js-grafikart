@@ -3,9 +3,15 @@
  * @param {{name: string, price: string, stocked: boolean}}product
  * @constructor
  */
+import {useEffect} from "react";
 
-export function ProductRow({product}) {
+export function ProductRow({product = {name: 'hdsk', price: '1$', stocked: false}}) {
     const styles = product.stocked ? undefined : {color: 'red'}
+
+    useEffect(() => {
+        throw new Error('LOllllll')
+    }, []);
+
     return <tr
         className={'bg-white border-b dark:bg-gray-800 dark:border-gray-700'}>
         <th scope="row" style={styles}

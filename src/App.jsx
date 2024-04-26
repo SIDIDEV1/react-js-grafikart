@@ -1,7 +1,6 @@
 import {createPortal} from "react-dom";
-import {ProductCategoryRow} from "./components/products/ProductCategoryRow.jsx";
 import {ProductRow} from "./components/products/ProductRow.jsx";
-import {ErrorBoundary} from "./components/ErrorBoundary.jsx";
+import {ErrorBoundary} from "react-error-boundary";
 
 function App() {
     return <div className=" relative bg-blue-100 m-10 h-[300px] overflow-hidden overflow-y-auto">
@@ -36,11 +35,23 @@ function App() {
             que survivre cinq
         </p>
 
-        <ErrorBoundary fallback={<p className="text-2xl text-red-100">Woooooooo</p>}>
+        <ErrorBoundary
+            FallbackComponent={AlertError}
+            onReset={() => console.log('Zbiii')}
+        >
             <ProductRow/>
         </ErrorBoundary>
 
         <Modal/>
+    </div>
+}
+
+function AlertError({error, resetErrorBoundary}) {
+    return <div className="bg-red-700 text-white">
+        <p>Something went wrong:</p>
+        <pre style={{color: "red"}}>{error.toString()}</pre>
+
+        <button onClick={resetErrorBoundary}>resetError</button>
     </div>
 }
 
