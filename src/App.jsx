@@ -10,15 +10,11 @@ function App() {
 
     const pageContent = getPageContent(page)
 
-    return <div>
+    return <div className="bg-gray-200 h-full">
         <Header page={page}/>
-        Page : {page}
-        <p></p><br/>
-        <a href="#">Home</a><br/>
-        <a href="#contact">Contact</a><br/>
-        <a href="#post">Post</a><br/>
-
-        {pageContent}
+        <div className="max-w-7xl px-4 py-8 mx-auto">
+            {pageContent}
+        </div>
     </div>
 }
 
