@@ -1,8 +1,9 @@
-import {useHashNavigation} from "./components/hooks/useHashNavigation.js";
-import {Home} from "./components/pages/Home.jsx";
-import {Single} from "./components/pages/Single.jsx";
-import {Contact} from "./components/pages/Contact.jsx";
-import {NotFound} from "./components/pages/NotFound.jsx";
+import {useHashNavigation} from "./hooks/useHashNavigation.js";
+import {Home} from "./pages/Home.jsx";
+import {Single} from "./pages/Single.jsx";
+import {Contact} from "./pages/Contact.jsx";
+import {NotFound} from "./pages/NotFound.jsx";
+import {Header} from "./components/Header.jsx";
 
 function App() {
     const {page} = useHashNavigation()
@@ -10,6 +11,7 @@ function App() {
     const pageContent = getPageContent(page)
 
     return <div>
+        <Header page={page}/>
         Page : {page}
         <p></p><br/>
         <a href="#">Home</a><br/>
