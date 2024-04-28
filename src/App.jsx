@@ -6,9 +6,9 @@ import {NotFound} from "./pages/NotFound.jsx";
 import {Header} from "./components/Header.jsx";
 
 function App() {
-    const {page} = useHashNavigation()
+    const {page, param} = useHashNavigation()
 
-    const pageContent = getPageContent(page)
+    const pageContent = getPageContent(page, param)
 
     return <div className="bg-gray-200 h-full">
         <Header page={page}/>
@@ -19,12 +19,12 @@ function App() {
 }
 
 
-function getPageContent(page) {
+function getPageContent(page, param) {
     switch (page) {
         case 'home' :
             return <Home/>;
         case 'post' :
-            return <Single/>
+            return <Single postId={param}/>
         case 'contact' :
             return <Contact/>
         default:

@@ -12,7 +12,11 @@ export function useHashNavigation() {
             removeEventListener('hashchange', handleChange)
         }
     }, []);
+
+    const cleanHashed = hash.replace('#', '').toLowerCase()
+
     return {
-        page: hash.replace('#', '').toLowerCase() || 'home'
+        page: cleanHashed ? cleanHashed.split(':')[0] : 'home',
+        param: cleanHashed.split(':')[1]
     }
 }

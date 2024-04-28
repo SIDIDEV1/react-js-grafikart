@@ -18,7 +18,7 @@ export function Home() {
 
     return <div>
         <h1 className="mb-10">Home</h1>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {data.map(post => (<div key={post.id}>
                 <Card
                     image={`https://picsum.photos/id/${post.id}/500/150`}
