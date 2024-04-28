@@ -19,6 +19,8 @@ export function Single({postId}) {
     if (errors) {
         return <Alert>{errors.toString()}</Alert>
     }
+
+    throw new Error('ErrorBoundary')
     return <div>
         <div className="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg">
             <img className="w-full h-48 object-cover" src={`https://picsum.photos/id/${postId}/1000/1000`}
