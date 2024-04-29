@@ -1,10 +1,7 @@
 import {useState} from "react";
 
-/**
- *
- * @param {string} initial
- */
-export function useIncrement({base = 0, min, max}) {
+
+export function useIncrement({base = 0, max = Infinity, min = -Infinity}) {
     const [state, setState] = useState(base);
 
     return {
