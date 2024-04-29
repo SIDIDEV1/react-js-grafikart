@@ -3,8 +3,8 @@ import {Spinner} from "../components/Spinner.jsx";
 import {useFetch} from "../hooks/useFetch.js";
 import {Alert} from "../components/Alert.jsx";
 import {Card} from "../components/Card.jsx";
-import {useContext} from "react";
 import {useTheme} from "../hooks/useTheme.jsx";
+import {motion} from "framer-motion";
 
 export function Home() {
     useDocumentTitle('Mon titre')
@@ -20,6 +20,12 @@ export function Home() {
 
     return <div>
         <h1 className="mb-10">Home</h1>
+        <motion.div
+            whileHover={{scale: 1.2, rotate: 90}}
+            whileTap={{background: "yellow", borderRadius: 100, rotate: -90}}
+            className="flex text-2xl font-extrabold justify-center items-center bg-blue-300 w-20 h-20">
+            1
+        </motion.div>
         <ThemeSwitcher/>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {data.map(post => (<div key={post.id}>
