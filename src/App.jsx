@@ -6,19 +6,30 @@ import {NotFound} from "./pages/NotFound.jsx";
 import {Header} from "./components/Header.jsx";
 import {ErrorBoundary} from "react-error-boundary";
 import {Button} from "./components/Button.jsx";
+import {useState} from "react";
+import {ThemeContext} from "./hooks/useTheme.jsx";
 
 function App() {
     const {page, param} = useHashNavigation()
 
     const pageContent = getPageContent(page, param)
+    const [theme, setTheme] = useState('light')
+    const toggleTheme = () => {
+        setTheme(theme === 'light' ? 'dark' : 'light')
+    }
 
     return <div className="bg-gray-200 h-full">
         <Header page={page}/>
-        <div className="max-w-7xl px-4 py-8 mx-auto">
-            <ErrorBoundary FallbackComponent={Fallback}>
-                {pageContent}
-            </ErrorBoundary>
-        </div>
+        <button onClick={toggleTheme}>Changer de theme : {theme}</button>
+
+        {/*<Button variant='yellow' onClick={toggleTheme}> Changer theme : {theme}</Button>*/}
+        <ThemeContext.Provider value={theme}>
+            <div className="max-w-7xl px-4 py-8 mx-auto">
+                <ErrorBoundary FallbackComponent={Fallback}>
+                    {pageContent}
+                </ErrorBoundary>
+            </div>
+        </ThemeContext.Provider>
     </div>
 }
 

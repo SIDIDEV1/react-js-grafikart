@@ -19,19 +19,16 @@ export function Home() {
 
     return <div>
         <h1 className="mb-10">Home</h1>
-        <ThemeContext.Provider value='red'>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {data.map(post => (<div key={post.id}>
-                    <Card
-                        image={`https://picsum.photos/id/${post.id}/500/150`}
-                        title={post.title}
-                        description={post.body}
-                        href={`#post:${post.id}`}
-                        buttonLabel="Voir l'article"
-                    />
-                </div>))}
-            </div>
-        </ThemeContext.Provider>
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {data.map(post => (<div key={post.id}>
+                <Card
+                    image={`https://picsum.photos/id/${post.id}/500/150`}
+                    title={post.title}
+                    description={post.body}
+                    href={`#post:${post.id}`}
+                    buttonLabel="Voir l'article"
+                />
+            </div>))}
+        </div>
     </div>
 }
